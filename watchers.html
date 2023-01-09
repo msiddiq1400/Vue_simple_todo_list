@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue 3 Demo</title>
+    <style>
+        body,input,p,b,span{padding:0;margin:0}
+        input{margin-top:10px;margin-left:15px;margin-right:5px;}
+        p{color:#008F7A;margin-top:15px;margin-left:15px;font-family:Verdana, Geneva, Tahoma, sans-serif;}
+        span{color:#0081CF;font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:bold}
+    </style>
+</head>
+<body>
+    <div id='vue_app'>
+        <input type="radio" value='London' v-model='city' ><b>London</b>
+        <input type="radio" value='Durham' v-model='city' ><b>Durham</b>
+        <input type="radio" value='Sydney' v-model='city' ><b>Sydney</b>
+        <p><span>{{city}}:</span> {{weather_info}}</p>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        let app = Vue.createApp({
+            data(){
+                return{
+                    city:'London',
+                    weather_info:'⏳ loading info'
+                }
+            },
+            watch:{
+                city:{
+                    //ran every time when value changes
+                    handler(newVal,preVal){
+                        console.log(preVal+' -> '+newVal)
+                        this.query(newVal)
+                    },
+                    //ran the first time when app loads
+                    immediate:true
+                }
+            },
+            methods:{
+                query(city){
+                    console.log('querying backend api using '+city)
+                    this.weather_info = 'Good weather in '+city
+                }
+            }
+        })
+        let vm = app.mount('#vue_app')
+    </script>
+</body>
+</html>
