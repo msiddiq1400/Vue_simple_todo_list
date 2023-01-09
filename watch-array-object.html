@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><title>Vue 3 Demo</title>
+<style>
+    h2{text-align:center;color:#0081CF;font-family:Verdana, Geneva, Tahoma, sans-serif;font-weight:bold}
+</style>
+</head>
+<body>
+    <div id='vue_app'>
+        <h2>watching [] & {}</h2>
+    </div>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script>
+        let app = Vue.createApp({
+            data(){return{
+                city:'London',
+                list:[1,2,3],
+                car:{ brand:'Toyota',model:'Supra',year:2021 }
+            }},
+            watch:{
+                list:{
+                    handler(newVal,preVal){
+                        console.log("list watcher")
+                        console.log("watchers")
+                        console.log(preVal)
+                        console.log("watcher2")
+                        console.log(newVal)
+                    },
+                    deep: true
+                },
+                'list.length' (newVal, preVal) {
+                    console.log('element total:' + preVal + ' -> ' + newVal)
+                },
+                // //avoid watching a specific elemtent, do not work
+                // 'list[0]': {
+                //     handler(newVal, preVal) {
+                //         console.log("first element watcher")
+                //         console.log(preVal + ' -> ' + newVal)
+                //     }
+                // },
+                'car.brand'(newValue, oldValue) {
+                    console.log('watch object property')
+                    console.log(newValue + ' -> ' + oldValue)
+                }
+            },
+        })
+        let vm = app.mount('#vue_app')
+    </script>
+</body>
+</html>
